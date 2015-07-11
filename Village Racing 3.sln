@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Village Racing 3", "Village Racing 3\Village Racing 3\Village Racing 3.csproj", "{A27F55DF-5780-47A5-879F-EBE0F2A86A10}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Village Racing 3Content", "Village Racing 3\Village Racing 3Content\Village Racing 3Content.contentproj", "{D8318723-C2BB-43AD-9070-F4A2BDD6D098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A27F55DF-5780-47A5-879F-EBE0F2A86A10}.Debug|x86.ActiveCfg = Debug|x86
+		{A27F55DF-5780-47A5-879F-EBE0F2A86A10}.Debug|x86.Build.0 = Debug|x86
+		{A27F55DF-5780-47A5-879F-EBE0F2A86A10}.Release|x86.ActiveCfg = Release|x86
+		{A27F55DF-5780-47A5-879F-EBE0F2A86A10}.Release|x86.Build.0 = Release|x86
+		{D8318723-C2BB-43AD-9070-F4A2BDD6D098}.Debug|x86.ActiveCfg = Debug|x86
+		{D8318723-C2BB-43AD-9070-F4A2BDD6D098}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
