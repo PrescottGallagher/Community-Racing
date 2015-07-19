@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Village_Racing_3
 {
@@ -25,6 +26,7 @@ namespace Village_Racing_3
         int gameState;
         Vector2 LEPos;
         Texture2D selector;
+        System.Windows.Forms.OpenFileDialog openFileDialog1;
 
         public Game1()
         {
@@ -84,22 +86,22 @@ namespace Village_Racing_3
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
                 this.Exit();
             if (this.IsActive)
             {
                 camera.LookAt(LEPos);
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                     LEPos.X -= 5;
-                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                     LEPos.X += 5;
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
                     LEPos.Y -= 5;
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Down))
                     LEPos.Y += 5;
 
-                if(Keyboard.GetState().IsKeyDown(Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Keys.S))
+                if(Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
                     File.WriteAllBytes("level.dat", IntegerSerializer<int>.serialize(tiles.levelOne));
 
                 tiles.Update();

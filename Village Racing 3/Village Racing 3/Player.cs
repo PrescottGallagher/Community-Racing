@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using System.Windows.Forms;
 
 namespace Village_Racing_3
 {
@@ -19,7 +20,7 @@ namespace Village_Racing_3
         public Vector2 Velocity;
         public SpriteEffects Direction;
         KeyboardState now;
-        KeyboardState keyState;
+        KeyboardState Keystate;
 
         #endregion
 
@@ -29,17 +30,17 @@ namespace Village_Racing_3
         {
             now = Keyboard.GetState();
 
-            if (now.IsKeyDown(Keys.Up))
+            if (now.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
                 Velocity.Y -= 5;
 
-            if (now.IsKeyDown(Keys.Left))
+            if (now.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 Velocity.X -= speed;
 
-            if (now.IsKeyDown(Keys.Right))
+            if (now.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                 Velocity.X += speed;
 
 
-            keyState = Keyboard.GetState();
+            Keystate = Keyboard.GetState();
         }
 
         private void handleGravity()
