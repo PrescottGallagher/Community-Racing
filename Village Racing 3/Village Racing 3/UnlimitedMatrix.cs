@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Village_Racing_3
    ~aaaaaa123456789, 2015-04-02
 */
 
-    public class UnlimitedMatrix<T>
+    public class UnlimitedMatrix<T> : IEnumerable, IEnumerable<long[]>
     {
         private object[] quadrants;
         private byte[] depths;
@@ -239,6 +240,79 @@ namespace Village_Racing_3
             this.quadrants = new object[4];
             this.depths = new byte[4];
             System.GC.Collect();
+        }
+
+        private IEnumerable<long[]> enumerate_direct(T[] array, bool ascending, long x, long y, int quadrant)
+        {
+            x <<= 3;
+            y <<= 3;
+            int pos, index;
+            long effectiveX, effectiveY;
+            for (pos = 0; pos < 64; pos++)
+            {
+                index = (pos & 1) | ((pos >> 1) & 2) | ((pos >> 2) & 4) | ((((pos >> 1) & 1) | ((pos >> 2) & 2) | ((pos >> 3) & 4)) << 3);
+                if (!ascending) index ^= 63;
+                if (is_default(array[index])) continue;
+                effectiveX = x + (index >> 3);
+                effectiveY = y + (index & 7);
+                if ((quadrant & 1) == 1) effectiveX = ~effectiveX;
+                if ((quadrant & 2) == 2) effectiveY = ~effectiveY;
+                yield return new long[] { effectiveX, effectiveY };
+            }
+        }
+
+        private IEnumerable<long[]> enumerate_indirect(object[] array, bool ascending, byte depth, long x, long y, int quadrant)
+        {
+            depth--;
+            x <<= 3;
+            y <<= 3;
+            int pos, index;
+            for (pos = 0; pos < 64; pos++)
+            {
+                index = (pos & 1) | ((pos >> 1) & 2) | ((pos >> 2) & 4) | ((((pos >> 1) & 1) | ((pos >> 2) & 2) | ((pos >> 3) & 4)) << 3);
+                if (!ascending) index ^= 63;
+                if (array[index] == null) continue;
+                if (depth == 0)
+                    foreach (long[] current in enumerate_direct((T[])array[index], ascending, x + (index >> 3), y + (index & 7), quadrant))
+                        yield return current;
+                else
+                    foreach (long[] current in enumerate_indirect(
+                      (object[])array[index],
+                      ascending,
+                      depth,
+                      x + (index >> 3),
+                      y + (index & 7),
+                      quadrant
+                    )) yield return current;
+            }
+        }
+
+        private IEnumerable<long[]> enumerate_quadrant(int quadrant, bool ascending)
+        {
+            if (quadrants[quadrant] == null) yield break;
+            if (depths[quadrant] == 0)
+            {
+                foreach (long[] current in enumerate_direct(
+                  (T[])quadrants[quadrant], ascending, 0, 0, quadrant
+                )) yield return current;
+                yield break;
+            }
+            foreach (long[] current in enumerate_indirect(
+              (object[])quadrants[quadrant], ascending, depths[quadrant], 0, 0, quadrant
+            )) yield return current;
+        }
+
+        public IEnumerator<long[]> GetEnumerator()
+        {
+            foreach (long[] current in enumerate_quadrant(1, false)) yield return current;
+            foreach (long[] current in enumerate_quadrant(0, true)) yield return current;
+            foreach (long[] current in enumerate_quadrant(3, false)) yield return current;
+            foreach (long[] current in enumerate_quadrant(2, true)) yield return current;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

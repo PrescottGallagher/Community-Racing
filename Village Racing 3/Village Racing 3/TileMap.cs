@@ -26,6 +26,8 @@ namespace Village_Racing_3
         Camera camera;
         Texture2D selector;
         MouseState MS;
+        MouseState downState;
+        bool isFirstFrame = false;
 
 
         public TileMap(Texture2D tiles, Camera camera, Texture2D selector)
@@ -39,65 +41,46 @@ namespace Village_Racing_3
         {
             levelOne[x, y] = type;
             blocks[x, y] = new Block(tileSheet, new Vector2(0 + (65 * type), 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if(type == 2)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(65, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 3)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(130, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 4)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(195, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 5)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(260, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 6)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(325, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 7)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(390, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 8)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(455, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 9)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(520, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 10)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(585, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 11)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(650, 0), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 12)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(0, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 13)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(65, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 14)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(130, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 15)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(195, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 16)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(260, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 17)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(325, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 18)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(390, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 19)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(455, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 20)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(520, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //if (type == 21)
-            //    blocks[x, y] = new Block(tileSheet, new Vector2(585, 65), new Vector2(x * Block.BLOCKWIDTH, y * Block.BLOCKHEIGHT));
-            //blocks[x, y] = new Rectangle(x * 64, y * 64, 64, 64);
+        }
+
+        public void tileEmpty(int x, int y, string type)
+        {
+ 
         }
 
         public void toLevel()
         {
-            using (StreamReader streamReader = new StreamReader("level.txt"))
-            {
-                for(int Y = 0; Y != File.ReadLines("level.txt").Count(); Y++)
-                {
-                    string line = streamReader.ReadLine();
-                    string[] numbers = line.Split(',');
+            //using (StreamReader streamReader = new StreamReader("level.dat"))
+            //{
+            //    try
+            //    {
+            //        for (int Y = 0; Y != File.ReadLines("level.txt").Count(); Y++)
+            //        {
+            //            string line = streamReader.ReadLine();
+            //            string[] numbers = line.Split(',');
 
-                    for (int X = 0; X != numbers.Length; X++)
-                    {
-                        int tile = int.Parse(numbers[X]);
-                        SetTile(X, Y, tile);
-                    }
-                }
-            }
+            //            for (int X = 0; X != numbers.Length; X++)
+            //            {
+            //                int tile = int.Parse(numbers[X]);
+            //                SetTile(X, Y, tile);
+            //            }
+            //        }
+            //    }
+            //    catch
+            //    {
+ 
+            //    }
+            //}
+
+            string filename = "level.dat";
+              try {
+                byte[] data = File.ReadAllBytes(filename);
+                levelOne = IntegerSerializer<int>.unserialize(data);
+                foreach (long[] coords in levelOne)
+                  SetTile((int)coords[0], (int)coords[1], (int)levelOne[coords[0], (int)coords[1]]);
+              } catch (Exception e) {
+                // some error message here
+              }
         }
 
         public void Update()
@@ -114,9 +97,13 @@ namespace Village_Racing_3
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed /* && lastState.LeftButton == ButtonState.Pressed*/)
             {
-                SetTile((int)((Mouse.GetState().X + camera.Position.X + offset) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y + offset) / Block.BLOCKHEIGHT), scrollTile);
+                if(Mouse.GetState().X == downState.X && Mouse.GetState().Y == downState.Y)
+                    SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), scrollTile);
+                else
+                    if(levelOne[(int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)(Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT] < 1)
+                        SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), scrollTile);
             }
-            if (Mouse.GetState().RightButton == ButtonState.Pressed /*&& lastState.RightButton == ButtonState.Pressed*/)
+            else if (Mouse.GetState().RightButton == ButtonState.Pressed /*&& lastState.RightButton == ButtonState.Pressed*/)
             {
                 SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), 0);
             }
@@ -131,6 +118,15 @@ namespace Village_Racing_3
                 {
                     scrollTile--;
                 }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                if (isFirstFrame)
+                {
+                    downState = Mouse.GetState();
+                    isFirstFrame = false;
+                }
+            if (Mouse.GetState().LeftButton == ButtonState.Released)
+                isFirstFrame = true;
 
 
             lastState = Mouse.GetState();

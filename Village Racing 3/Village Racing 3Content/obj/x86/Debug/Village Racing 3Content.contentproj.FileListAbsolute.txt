@@ -1,1 +1,2 @@
 C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3Content\obj\x86\Debug\Village Racing 3Content.contentprojResolveAssemblyReference.cache
+C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3Content\obj\x86\Debug\Village Racing 3Content.contentprojResolveAssemblyReference.cache

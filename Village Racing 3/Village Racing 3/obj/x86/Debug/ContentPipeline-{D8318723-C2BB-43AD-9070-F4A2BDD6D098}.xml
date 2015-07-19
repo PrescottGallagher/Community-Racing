@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\tileSheet.xnb</Output>
+      <Output>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\tileSheet.xnb</Output>
       <Time>2015-07-11T15:11:22.8858788-07:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\BlockSelector.xnb</Output>
+      <Output>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\BlockSelector.xnb</Output>
       <Time>2015-07-11T14:41:42.5490494-07:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -26,10 +26,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Soul\Documents\Visual Studio 2010\Projects\Village Racing 3\Community-Racing\Village Racing 3\Village Racing 3\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

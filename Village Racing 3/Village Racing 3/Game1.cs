@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 namespace Village_Racing_3
 {
@@ -85,21 +86,26 @@ namespace Village_Racing_3
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            if (this.IsActive)
+            {
+                camera.LookAt(LEPos);
 
-            camera.LookAt(LEPos);
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                    LEPos.X -= 5;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                    LEPos.X += 5;
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    LEPos.Y -= 5;
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                    LEPos.Y += 5;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                LEPos.X -= 5;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                LEPos.X += 5;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                LEPos.Y -= 5;
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                LEPos.Y += 5;
+                if(Keyboard.GetState().IsKeyDown(Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Keys.S))
+                    File.WriteAllBytes("level.dat", IntegerSerializer<int>.serialize(tiles.levelOne));
 
-            tiles.Update();
+                tiles.Update();
 
-            // TODO: Add your update logic here
+                // TODO: Add your update logic here
+            }
 
             base.Update(gameTime);
         }
@@ -113,13 +119,17 @@ namespace Village_Racing_3
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(new Vector2(0.0f)));
-            tiles.DrawForeGround(spriteBatch);
-            spriteBatch.End();
+            
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(new Vector2(1.0f)));
             tiles.Draw(spriteBatch);
             spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(new Vector2(0.0f)));
+            tiles.DrawForeGround(spriteBatch);
+            spriteBatch.End();
+
+            this.Window.Title = Mouse.GetState().X.ToString() + ", " + Mouse.GetState().Y.ToString();
             
 
 
