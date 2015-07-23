@@ -26,7 +26,7 @@ namespace Village_Racing_3
         int gameState;
         Vector2 LEPos;
         Texture2D selector;
-        System.Windows.Forms.OpenFileDialog openFileDialog1;
+        
 
         public Game1()
         {
@@ -66,6 +66,8 @@ namespace Village_Racing_3
             tiles.toLevel();
             LEPos = new Vector2(300, 300);
 
+            
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -102,7 +104,7 @@ namespace Village_Racing_3
                     LEPos.Y += 5;
 
                 if(Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
-                    File.WriteAllBytes("level.dat", IntegerSerializer<int>.serialize(tiles.levelOne));
+                    File.WriteAllBytes(tiles.openFileDialog1.FileName, IntegerSerializer<int>.serialize(tiles.levelOne));
 
                 tiles.Update();
 

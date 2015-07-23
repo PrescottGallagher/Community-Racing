@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using System.Windows.Forms;
 
 
 namespace Village_Racing_3
 {
     class TileMap
     {
-        int offset;
         int scrollTile = 1;
         int maxScrollTile = 20;
         int minScrollTile = 0;
@@ -28,6 +28,7 @@ namespace Village_Racing_3
         MouseState MS;
         MouseState downState;
         bool isFirstFrame = false;
+        public System.Windows.Forms.OpenFileDialog openFileDialog1;
 
 
         public TileMap(Texture2D tiles, Camera camera, Texture2D selector)
@@ -50,29 +51,9 @@ namespace Village_Racing_3
 
         public void toLevel()
         {
-            //using (StreamReader streamReader = new StreamReader("level.dat"))
-            //{
-            //    try
-            //    {
-            //        for (int Y = 0; Y != File.ReadLines("level.txt").Count(); Y++)
-            //        {
-            //            string line = streamReader.ReadLine();
-            //            string[] numbers = line.Split(',');
-
-            //            for (int X = 0; X != numbers.Length; X++)
-            //            {
-            //                int tile = int.Parse(numbers[X]);
-            //                SetTile(X, Y, tile);
-            //            }
-            //        }
-            //    }
-            //    catch
-            //    {
- 
-            //    }
-            //}
-
-            string filename = "level.dat";
+            openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.ShowDialog();
+            string filename = openFileDialog1.FileName;
               try {
                 byte[] data = File.ReadAllBytes(filename);
                 levelOne = IntegerSerializer<int>.unserialize(data);
@@ -85,17 +66,13 @@ namespace Village_Racing_3
 
         public void Update()
         {
-            if ((Mouse.GetState().X / Block.BLOCKWIDTH) < 0 || (Mouse.GetState().Y / Block.BLOCKHEIGHT) < 0)
-                offset = Block.BLOCKWIDTH;
-            else
-                offset = 0;
-
+            
             StartingPoint = new Vector2(camera.Position.X - Block.BLOCKWIDTH, camera.Position.Y - Block.BLOCKHEIGHT);
             EndingPoint = new Vector2(StartingPoint.X + camera._viewport.Width + (Block.BLOCKWIDTH * 3), StartingPoint.Y + camera._viewport.Height + (Block.BLOCKHEIGHT * 3));
             EndingPoint /= Block.BLOCKHEIGHT;
             StartingPoint /= Block.BLOCKHEIGHT;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed /* && lastState.LeftButton == ButtonState.Pressed*/)
+            if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed /* && lastState.LeftButton == ButtonState.Pressed*/)
             {
                 if(Mouse.GetState().X == downState.X && Mouse.GetState().Y == downState.Y)
                     SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), scrollTile);
@@ -103,7 +80,7 @@ namespace Village_Racing_3
                     if(levelOne[(int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)(Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT] < 1)
                         SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), scrollTile);
             }
-            else if (Mouse.GetState().RightButton == ButtonState.Pressed /*&& lastState.RightButton == ButtonState.Pressed*/)
+            else if (Mouse.GetState().RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed /*&& lastState.RightButton == ButtonState.Pressed*/)
             {
                 SetTile((int)((Mouse.GetState().X + camera.Position.X) / Block.BLOCKWIDTH), (int)((Mouse.GetState().Y + camera.Position.Y) / Block.BLOCKHEIGHT), 0);
             }
@@ -119,13 +96,13 @@ namespace Village_Racing_3
                     scrollTile--;
                 }
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
                 if (isFirstFrame)
                 {
                     downState = Mouse.GetState();
                     isFirstFrame = false;
                 }
-            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            if (Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
                 isFirstFrame = true;
 
 
